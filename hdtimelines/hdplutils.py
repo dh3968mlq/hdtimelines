@@ -12,60 +12,6 @@ except:
     import historicaldate.historicaldate.hdate as hdate
     import historicaldate.historicaldate.hdateutils as hdateutils
 
-# -----------------------------------------------------------------------------------
-def calc_age(ymd_birth, ymd_ref):
-    """
-    Calculate a person's age from ymd of birth and death
-
-    *ymd_birth*, *ymd_death* must be named tuples, as returned by *hdateutils.to_ymd*
-    """
-    age = ymd_ref.year - ymd_birth.year
-    if ymd_birth.year < 0 and ymd_ref.year > 0:
-        age = age - 1   # there is no year 0
-    if (ymd_ref.month < ymd_birth.month) or (ymd_ref.month < ymd_birth.month and ymd_ref.day < ymd_birth.day):
-        age = age - 1 
-    if age < 0:
-        raise ValueError("Age calculated as less than 0")
-    return age
-# ------------------------------------------------------------------------------------
-def calc_agetext(pdates_birth, pdates_ref):
-    "Calculate age text, including ? to indicate uncertainty, from *plTimeLine().pdates* properties"
-    ymd_birth_early = hdateutils.to_ymd(pdates_birth['ordinal_early'])
-    ymd_birth_mid = hdateutils.to_ymd(pdates_birth['ordinal_mid'])
-    ymd_birth_late = hdateutils.to_ymd(pdates_birth['ordinal_late'])
-    ymd_ref_early = hdateutils.to_ymd(pdates_ref['ordinal_early'])
-    ymd_ref_mid = hdateutils.to_ymd(pdates_ref['ordinal_mid'])
-    ymd_ref_late = hdateutils.to_ymd(pdates_ref['ordinal_late'])
-
-    years_largest = calc_age(ymd_birth_early, ymd_ref_late)
-    years_smallest = calc_age(ymd_birth_late, ymd_ref_early)
-    uncertain = '?' if years_largest > years_smallest else ""
-
-    years = calc_age(ymd_birth_mid, ymd_ref_mid)
-    return f"{years}{uncertain}"
-# -----------------------------------------------------------------------------------
-def calc_yeartext(pdates, hover_datetype='day'):
-    """
-    Calculate text to represent a date, including representation of uncertainty,
-    from a *plTimeLine().pdates* property
-    """
-    if hover_datetype not in {'year','month','day'}:
-        raise ValueError(f"hover_datetype must be year, month or day. Found:{hover_datetype}")
-    
-    ymd_early = hdateutils.to_ymd(pdates['ordinal_early'])
-    ymd_mid = hdateutils.to_ymd(pdates['ordinal_mid'])
-    ymd_late = hdateutils.to_ymd(pdates['ordinal_late'])
-
-    ytext = str(ymd_mid.year) if ymd_mid.year > 0 else str(-ymd_mid.year) + "BCE"
-    if (ymd_early.year != ymd_late.year):
-        ytext = ytext + "?"             # Show uncertain year
-    if (ymd_early.month == ymd_late.month) and (ymd_early.year == ymd_late.year) and hover_datetype != 'year':
-        months = ["Jan", "Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-        ytext = f"{months[ymd_mid.month - 1]} {ytext}"
-    if (ymd_early == ymd_late) and hover_datetype == 'day':
-        ytext = f"{ymd_mid.day} {ytext}"      # Show exact date
-    return ytext
-
 # ------------------------------------------------------------------------------------------------    
 # -- Now for functions that create the figure
 # ------------------------------------------------------------------------------------------------    

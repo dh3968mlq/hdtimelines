@@ -9,31 +9,20 @@ from math import ceil
 try:
     import historicaldate.hdate as hdate
     import historicaldate.hdateutils as hdateutils
-    import historicaldate.lineorganiser as lineorganiser
-    import historicaldate.colorgen as colorgen
+    import hdtimelines.hdtimelineutils as hdtimelineutils
+    import hdtimelines.lineorganiser as lineorganiser
+    import hdtimelines.colorgen as colorgen
 except:
     import historicaldate.historicaldate.hdate as hdate
     import historicaldate.historicaldate.hdateutils as hdateutils
+    import hdtimelines.hdtimelines.hdtimelineutils as hdtimelineutils
     import hdtimelines.hdtimelines.lineorganiser as lineorganiser
     import hdtimelines.hdtimelines.colorgen as colorgen
 
 try:
-    import historicaldate.hdplutils as hdplutils
+    import hdtimelines.hdplutils as hdplutils
 except:
     import hdtimelines.hdtimelines.hdplutils as hdplutils
-
-def check_dataframe(df, study_range_start=None, study_range_end=None, dateformat="default"):
-    "Check if a dataframe will successfully add as a plTimeLine topic"
-    pltl = plTimeLine(mindate="2000 BC", maxdate="2200", xmode="years", dateformat=dateformat)
-    message = ""
-    try:
-        added = pltl.add_topic_from_df(df, study_range_start=study_range_start, study_range_end=study_range_end)
-        if not added:
-            message = "No events found in study range"
-    except Exception as e:
-        added = False
-        message = f"Error: {repr(e)}"
-    return added, message
 
 class plTimeLine():
     """
@@ -263,15 +252,15 @@ class plTimeLine():
             if pdates_end:
                 labeldate = pdates_start['ordinal_mid'] + int((pdates_end['ordinal_mid'] - pdates_start['ordinal_mid'])/2.0)
                 if ongoing:
-                    hovertext = f"{htext} ({hdplutils.calc_yeartext(pdates_start, hover_datetype=hover_datetype)}...)"
+                    hovertext = f"{htext} ({hdtimelineutils.calc_yeartext(pdates_start, hover_datetype=hover_datetype)}...)"
                 else:
-                    hovertext = f"{htext} ({hdplutils.calc_yeartext(pdates_start, hover_datetype=hover_datetype)}-"\
-                                        f"{hdplutils.calc_yeartext(pdates_end, hover_datetype=hover_datetype)})"
+                    hovertext = f"{htext} ({hdtimelineutils.calc_yeartext(pdates_start, hover_datetype=hover_datetype)}-"\
+                                        f"{hdtimelineutils.calc_yeartext(pdates_end, hover_datetype=hover_datetype)})"
                     if htext_end != htext:
-                        hovertext_end = f"{htext_end} ({hdplutils.calc_yeartext(pdates_end, hover_datetype='day')})"
+                        hovertext_end = f"{htext_end} ({hdtimelineutils.calc_yeartext(pdates_end, hover_datetype='day')})"
             else:
                 labeldate = pdates_start['ordinal_mid']
-                hovertext = f"{htext} ({hdplutils.calc_yeartext(pdates_start, hover_datetype=hover_datetype)})"
+                hovertext = f"{htext} ({hdtimelineutils.calc_yeartext(pdates_start, hover_datetype=hover_datetype)})"
         elif pdates_birth and (pdates_birth['ordinal_mid'] is not None):
             if pdates_death:
                 labeldate = pdates_birth['ordinal_mid'] + int((pdates_death['ordinal_mid'] - pdates_birth['ordinal_mid'])/2.0)
@@ -323,7 +312,7 @@ class plTimeLine():
         
         if showbirthanddeath:
             if pdates_birth and pdates_birth['ordinal_mid']:
-                hovertext = f"{htext} (b. {hdplutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})"
+                hovertext = f"{htext} (b. {hdtimelineutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})"
                 endpoint = pdates_start['ordinal_early'] if pdates_start else \
                             pdates_birth['ordinal_mid'] + int((pdates_death['ordinal_mid'] - pdates_birth['ordinal_mid']) / 2.0)
                 hdplutils._add_trace_part(self.figure, 
@@ -340,9 +329,9 @@ class plTimeLine():
                                 )
 
             if pdates_death and (pdates_death['ordinal_mid'] is not None):
-                hovertext = f"{htext} (b. {hdplutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})" if alive \
-                            else f"{htext} (d. {hdplutils.calc_yeartext(pdates_death, hover_datetype=hover_datetype)}" +\
-                                    f" aged {hdplutils.calc_agetext(pdates_birth, pdates_death)})"
+                hovertext = f"{htext} (b. {hdtimelineutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})" if alive \
+                            else f"{htext} (d. {hdtimelineutils.calc_yeartext(pdates_death, hover_datetype=hover_datetype)}" +\
+                                    f" aged {hdtimelineutils.calc_agetext(pdates_birth, pdates_death)})"
                 startpoint = pdates_end['ordinal_late'] if pdates_end else \
                             pdates_start['ordinal_late'] if pdates_start else \
                             pdates_birth['ordinal_mid'] + int((pdates_death['ordinal_mid'] - pdates_birth['ordinal_mid']) / 2.0)
