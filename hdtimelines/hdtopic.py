@@ -1,5 +1,5 @@
 try:
-    import historicaldate.hdtimelineutils as hdtimelineutils
+    import hdtimelines.hdtimelineutils as hdtimelineutils
 except:
     import hdtimelines.hdtimelines.hdtimelineutils as hdtimelineutils
 

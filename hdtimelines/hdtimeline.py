@@ -4,7 +4,7 @@ hdTimeline class definition
 import pandas as pd
 
 try:
-    import historicaldate.hdtopic as hdtopic
+    import hdtimelines.hdtopic as hdtopic
 except:
     import hdtimelines.hdtimelines.hdtopic as hdtopic
 

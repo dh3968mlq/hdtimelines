@@ -1,11 +1,14 @@
 try:
     import historicaldate.hdate as hdate
     import historicaldate.hdateutils as hdateutils
-    import hdtimelines.hdpl as hdpl
 except:
     import historicaldate.historicaldate.hdate as hdate
     import historicaldate.historicaldate.hdateutils as hdateutils
-    import hdtimelines.hdtimelines.hdpl as hdpl
+
+try:
+    import hdtimelines.pltimeline as pltimeline
+except:
+    import hdtimelines.hdtimelines.pltimeline as pltimeline
 
 def calc_date_ordinals(hd, dprefix="", dateformat=None, missingasongoing=False):
     """
@@ -122,7 +125,7 @@ def calc_yeartext(pdates, hover_datetype='day'):
 # -----------------------------------------------------------------------------------
 def check_dataframe(df, study_range_start=None, study_range_end=None, dateformat="default"):
     "Check if a dataframe will successfully add as a plTimeLine topic"
-    pltl = hdpl.plTimeLine(mindate="2000 BC", maxdate="2200", xmode="years", dateformat=dateformat)
+    pltl = pltimeline.plTimeLine(mindate="2000 BC", maxdate="2200", xmode="years", dateformat=dateformat)
     message = ""
     try:
         added = pltl.add_topic_from_df(df, study_range_start=study_range_start, study_range_end=study_range_end)
