@@ -69,6 +69,9 @@ class plTimeLine():
         self.max_y_used = 0.0
         self.fit_xaxis()
 
+        self.earliest = None # Earliest ordinal appearing in this object
+        self.latest = None   # and the latest
+
 # -------------
     def fit_xaxis(self, mindate=None, maxdate=None):
         """
@@ -166,6 +169,10 @@ class plTimeLine():
             self.max_y_used += (len(lo.linerecord) + 2) * rowspacing
             self.figure.update_yaxes(range=[max(self.max_y_used+0.25,6.0),-0.25], 
                                     visible=False)
+        
+        self.earliest = lo.earliest if self.earliest is None else min(self.earliest, lo.earliest)
+        self.latest = lo.latest if self.latest is None else max(self.latest, lo.latest)
+
         return some_events_added
 # -------------
     def add_topic(self, topic=None, 

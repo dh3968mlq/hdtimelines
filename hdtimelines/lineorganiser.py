@@ -8,6 +8,8 @@ class LineOrganiser():
         self.daysminspacing = daysminspacing
         self.previoustraceindex = 0
         self.startline = 0
+        self.earliest = None        # Earliest ordinal appearing in this object
+        self.latest = None          # And the latest
 
     def reset_startline(self):
         "Reset the start line to the maximum already used by this LineOrganiser object"
@@ -29,6 +31,9 @@ class LineOrganiser():
         t_latest = max(latest, labeldate + textdelta) + spacingdelta
         lpd = {"earliest":t_earliest, "latest":t_latest}
 
+        self.earliest = t_earliest if self.earliest is None else min(self.earliest, t_earliest)
+        self.latest = t_latest if self.latest is None else max(self.latest, t_latest)
+
         for i in range(self.startline, nlines := len(self.linerecord)):
             line = self.linerecord[(iline := (self.previoustraceindex + i + 1) % nlines)]
             if self._is_available(line, lpd):
@@ -38,7 +43,6 @@ class LineOrganiser():
 
         # Not found
         self.linerecord += [[lpd]]
-        #print(self.linerecord)
         self.previoustraceindex = len(self.linerecord) - 1
         return self.previoustraceindex
 
