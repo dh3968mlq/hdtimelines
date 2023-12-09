@@ -59,12 +59,14 @@ class plTimeLine():
         self.initial_range_years = (self.maxdate - self.mindate) / 365.
 
         self.fig_config = {'scrollZoom': True}
-        self.figure.update_layout(dragmode="pan", showlegend=False, 
-                    hovermode=hovermode, hoverdistance=hoverdistance,
-                    transition= {
-                        'duration': 500,
-                        'easing': 'cubic-in-out'
-                    }
+        self.figure.update_layout(
+            dragmode="pan", 
+            showlegend=False, 
+            hovermode=hovermode, hoverdistance=hoverdistance,
+            transition= {
+                'duration': 500,
+                'easing': 'cubic-in-out'
+            }
         )
         self.max_y_used = 0.0
         self.fit_xaxis()
