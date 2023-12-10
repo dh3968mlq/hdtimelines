@@ -63,10 +63,11 @@ class plTimeLine():
             dragmode="pan", 
             showlegend=False, 
             hovermode=hovermode, hoverdistance=hoverdistance,
-            transition= {
-                'duration': 500,
-                'easing': 'cubic-in-out'
-            }
+            # -- Too buggy
+            #transition= {
+            #    'duration': 500,
+            #    'easing': 'cubic-in-out'
+            #}
         )
         self.max_y_used = 0.0
         self.fit_xaxis()
