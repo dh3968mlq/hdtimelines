@@ -29,7 +29,8 @@ class plTimeLine():
     An object class to wrap a Plotly figure displaying a timeline
     """
     def __init__(self, title=None, mindate=None, maxdate=None, 
-                hovermode='closest', hoverdistance=5, xmode="date", dateformat=None):
+                hovermode='closest', hoverdistance=5, xmode="date", dateformat=None,
+                transition=None):
         """
         * title: str
         * mindate: Python datetime.date, or ordinal (int) or (HDate format) string
@@ -37,6 +38,7 @@ class plTimeLine():
         * hovermode, hoverdistance: See https://plotly.com/python/hover-text-and-formatting/
         * xmode: "date" (default, allows AD only) or "years". Controls how the X axis is displayed in the Plotly figure
         * dateformat: as for HDate()
+        * transition: Graph transition, a dict such as {'duration': 500, 'easing': 'cubic-in-out'} if transition is required
         """
         if xmode not in {"date","years"}:
             raise ValueError(f"xmode must be 'date' or 'years', not '{xmode}'")
@@ -63,12 +65,10 @@ class plTimeLine():
             dragmode="pan", 
             showlegend=False, 
             hovermode=hovermode, hoverdistance=hoverdistance,
-            # -- Too buggy
-            #transition= {
-            #    'duration': 500,
-            #    'easing': 'cubic-in-out'
-            #}
         )
+        if transition:
+            self.figure.update_layout(transition=transition)
+
         self.max_y_used = 0.0
         self.fit_xaxis()
 
