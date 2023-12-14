@@ -74,6 +74,7 @@ class plTimeLine():
 
         self.earliest = None # Earliest ordinal appearing in this object
         self.latest = None   # and the latest
+        self.topics = []   # List of basic information about topics: title, min_y, max_y
 
 # -------------
     def fit_xaxis(self, mindate=None, maxdate=None):
@@ -124,6 +125,8 @@ class plTimeLine():
                     else "colour" if "colour" in df.columns \
                     else ""
 
+        ystart = self.max_y_used
+
         if "hdate" in df.columns:
             df["_hdplsortorder"] = df["hdate"].apply(lambda x: hdateutils.calc_mid_ordinal(x, dateformat=self._dateformat))
             dfs = df.sort_values("_hdplsortorder")
@@ -170,6 +173,7 @@ class plTimeLine():
                         showarrow=False, font={'size':14})
 
             self.max_y_used += (len(lo.linerecord) + 2) * rowspacing
+            self.topics.append({"title":title, "min_y":ystart, "max_y":self.max_y_used})
             self.figure.update_yaxes(range=[max(self.max_y_used+0.25,6.0),-0.25], 
                                     visible=False)
         
