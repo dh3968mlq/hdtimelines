@@ -105,7 +105,7 @@ class plTimeLine():
                     title="", showbirthanddeath=True, showlabel=True,
                     lives_first=True,  rowspacing=0.3, hover_datetype='day',
                     study_range_start=None, study_range_end=None,
-                    max_rank=1):
+                    max_rank=1, id=0):
         """
         Add topic to Plotly figure from a dataframe
 
@@ -173,7 +173,7 @@ class plTimeLine():
                         showarrow=False, font={'size':14})
 
             self.max_y_used += (len(lo.linerecord) + 2) * rowspacing
-            self.topics.append({"title":title, "min_y":ystart, "max_y":self.max_y_used})
+            self.topics.append({"title":title, "min_y":ystart, "max_y":self.max_y_used, "id":id})
             self.figure.update_yaxes(range=[max(self.max_y_used+0.25,6.0),-0.25], 
                                     visible=False)
         
@@ -197,7 +197,7 @@ class plTimeLine():
                     title=title, showbirthanddeath=showbirthanddeath, showlabel=showlabel,
                     lives_first=lives_first,  rowspacing=rowspacing, hover_datetype=hover_datetype,
                     study_range_start=study_range_start, study_range_end=study_range_end,
-                    max_rank=max_rank)
+                    max_rank=max_rank, id=topic.id)
 
         return some_events_added
 # -------------
