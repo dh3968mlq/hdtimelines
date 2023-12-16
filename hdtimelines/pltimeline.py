@@ -104,6 +104,7 @@ class plTimeLine():
     def add_topic_from_df(self, df, 
                     title="", showbirthanddeath=True, showlabel=True,
                     lives_first=True,  rowspacing=0.3, hover_datetype='day',
+                    marker_symbol='diamond',
                     study_range_start=None, study_range_end=None,
                     max_rank=1, id=0):
         """
@@ -142,13 +143,14 @@ class plTimeLine():
         lo = lineorganiser.LineOrganiser(daysperlabelchar=2.75 * self.initial_range_years,
                                          daysminspacing=0.5 * self.initial_range_years)
 
-        def disp_set(dfset):
+        def disp_set(dfset, marker_symbol='diamond'):
             some_traces_added = False
             for _, row in dfset.iterrows():  
                 color = row[colorcol] if colorcol and row[colorcol] else cgen.get()
                 some_traces_added = self.add_timeline_trace(row, 
                                 showbirthanddeath=showbirthanddeath, showlabel=showlabel,
                                 color=color, lo=lo, hover_datetype=hover_datetype,
+                                marker_symbol=marker_symbol,
                                 study_range_start=study_range_start, 
                                 study_range_end=study_range_end) or \
                             some_traces_added
@@ -159,11 +161,11 @@ class plTimeLine():
         if "hdate_birth" in dfs.columns and lives_first:
             dfs["_hdplbirth"] = dfs["hdate_birth"].apply(lambda x: hdateutils.calc_mid_ordinal(x, dateformat=self._dateformat))
             df_lives = dfs[dfs["_hdplbirth"].notna()].sort_values(["_hdplbirth"])
-            some_events_added = disp_set(df_lives) or some_events_added
+            some_events_added = disp_set(df_lives, marker_symbol=marker_symbol) or some_events_added
             dfs = dfs[dfs["_hdplbirth"].isna()]   # -- not lives
             lo.reset_startline()
 
-        some_events_added = disp_set(dfs) or some_events_added 
+        some_events_added = disp_set(dfs, marker_symbol=marker_symbol) or some_events_added 
 
         # The event set is ignored if it lies entirely outside the study range
         if some_events_added:
@@ -186,6 +188,7 @@ class plTimeLine():
                     showbirthanddeath=True, showlabel=True,
                     lives_first=True,  rowspacing=0.3, hover_datetype='day',
                     study_range_start=None, study_range_end=None,
+                    marker_symbol='diamond',
                     max_rank=1):
         """
         Add topic to Plotly figure from an hdTopic object
@@ -196,6 +199,7 @@ class plTimeLine():
         some_events_added = self.add_topic_from_df(df=df, 
                     title=title, showbirthanddeath=showbirthanddeath, showlabel=showlabel,
                     lives_first=lives_first,  rowspacing=rowspacing, hover_datetype=hover_datetype,
+                    marker_symbol=marker_symbol,
                     study_range_start=study_range_start, study_range_end=study_range_end,
                     max_rank=max_rank, id=topic.id)
 
@@ -216,7 +220,7 @@ class plTimeLine():
     def add_timeline_trace(self, row, showbirthanddeath=False, 
                         showlegend=True, showlabel=True,
                         color=None, lo=None, rowspacing=0.3,
-                        hover_datetype='day',
+                        hover_datetype='day', marker_symbol='diamond',
                         study_range_start=None, study_range_end=None):
         '''
         Add a timeline trace for an event
@@ -298,7 +302,7 @@ class plTimeLine():
                         xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
                         )
             pltimelineutils._add_trace_marker(fig, pdate=pdates_start['ordinal_mid'], y=y, color=color,
-                            showlegend=showlegend, label=text, 
+                            showlegend=showlegend, label=text, symbol=marker_symbol,
                             hovertext=hovertext, hyperlink=hlink, xmode=self._xmode)
             if pdates_end:
                 pltimelineutils._add_trace_part(self.figure, 
@@ -321,6 +325,7 @@ class plTimeLine():
                                 hovertext=hovertext, hyperlink=hlink, xmode=self._xmode)
                 else:        # Normal marker at end of period
                     pltimelineutils._add_trace_marker(fig, pdate=pdates_end['ordinal_mid'], y=y, color=color,
+                                symbol=marker_symbol,
                                 hovertext=hovertext_end if hovertext_end else hovertext, 
                                 hyperlink=hlink, xmode=self._xmode)
         
