@@ -30,7 +30,7 @@ class plTimeLine():
     """
     def __init__(self, title=None, mindate=None, maxdate=None, 
                 hovermode='closest', hoverdistance=5, xmode="date", dateformat=None,
-                transition=None):
+                transition=None, scrollzoom=True):
         """
         * title: str
         * mindate: Python datetime.date, or ordinal (int) or (HDate format) string
@@ -60,7 +60,7 @@ class plTimeLine():
         self.pointinterval = int((self.maxdate - self.mindate) / 200.0)
         self.initial_range_years = (self.maxdate - self.mindate) / 365.
 
-        self.fig_config = {'scrollZoom': True}
+        self.fig_config = {'scrollZoom': scrollzoom}
         self.figure.update_layout(
             dragmode="pan", 
             showlegend=False, 
@@ -170,7 +170,7 @@ class plTimeLine():
         # The event set is ignored if it lies entirely outside the study range
         if some_events_added:
             if title:
-                self.figure.add_annotation(text=f"<b>{title}</b>", 
+                self.figure.add_annotation(text=f"{title}", # -- text=f"<b>{title}</b>" always comes out quite ugly using Bootstrap
                         x=0.02, xref='paper', y=self.max_y_used, 
                         showarrow=False, font={'size':14})
 
