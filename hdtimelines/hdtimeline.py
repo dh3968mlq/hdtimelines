@@ -82,10 +82,13 @@ class hdTimeLine():
         Calculate earliest and latest date in this timeline, and return them as 
         a duple (earliest, latest) of ordinals
         """
-        topic_ranges = [topic.get_date_range() for topic in self.topics]
-        mindate = min([topic_range[0] for topic_range in topic_ranges])
-        maxdate = max([topic_range[1] for topic_range in topic_ranges])
-        return mindate, maxdate
+        if self.topics:
+            topic_ranges = [topic.get_date_range() for topic in self.topics]
+            mindate = min([topic_range[0] for topic_range in topic_ranges])
+            maxdate = max([topic_range[1] for topic_range in topic_ranges])
+            return mindate, maxdate
+        else:
+            return None, None
     # ----------
     def get_topic_index(self, id=None):
         "Find the position of a topic in the list, given its id"
