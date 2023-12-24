@@ -287,15 +287,16 @@ Checks if a data frame can be used by *add_topic_from_df()*.
 
 ## Changes
 
+### New in 0.0.7
+
+Split from historicaldate package (https://github.com/dh3968mlq/historicaldate)
+
 ### New in 0.0.6
 
 *add_event_set* renamed to *add_topic_from_df*
 
 ### New in 0.0.5
 
-   * BC dates are now supported in *HDate*
-   * Ordinal dates implemented in *HDate*
-   * *dateformat* implemented, allowing dates to be formatted as *25/12/1066* or *12/25/1066* or *Dec 25, 1066*
    * BC dates can now be displayed on timelines (*xmode=years*)
    * X-axis (date axis) labels moved to top 
 
