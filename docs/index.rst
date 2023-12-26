@@ -10,7 +10,7 @@ Table of Contents
    :caption: Contents:
    
    pltimeline
-   pltimelineutils
+   pltimelinehelpers
    lineorganiser
    colorgen
    hdtimeline

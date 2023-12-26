@@ -1,28 +1,18 @@
+import sys
 import datetime
 import pandas as pd
-import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from plotly import colors as pc
-from dateutil.relativedelta import relativedelta
-from math import ceil
 
-try:
-    import historicaldate.hdate as hdate
-    import historicaldate.hdateutils as hdateutils
-except:
-    import historicaldate.historicaldate.hdate as hdate
-    import historicaldate.historicaldate.hdateutils as hdateutils
+# -- General idea: improves chances of tests and Sphinx builds working if this is included as a submodule
+def add_submodule(path):
+    if f"./{path}" not in sys.path:
+        sys.path.insert(0,f"../{path}") # -- Needed for Sphinx builds, usually run in the docs subdirectory
+        sys.path.insert(0,f"./{path}")  # -- For normall running. Add second so it will go first in the search order
+add_submodule("hdtimelines")
+add_submodule("historicaldate")
 
-try:
-    import hdtimelines.hdtimelineutils as hdtimelineutils
-    import hdtimelines.lineorganiser as lineorganiser
-    import hdtimelines.colorgen as colorgen
-    import hdtimelines.pltimelineutils as pltimelineutils
-except:
-    import hdtimelines.hdtimelines.hdtimelineutils as hdtimelineutils
-    import hdtimelines.hdtimelines.lineorganiser as lineorganiser
-    import hdtimelines.hdtimelines.colorgen as colorgen
-    import hdtimelines.hdtimelines.pltimelineutils as pltimelineutils
+from historicaldate import hdate, hdateutils
+from hdtimelines import hdtimelineutils, lineorganiser, colorgen, pltimelinehelpers
 
 class plTimeLine():
     """
@@ -292,27 +282,27 @@ class plTimeLine():
         y = self.max_y_used + (iline + 1) * rowspacing
 
         if showlabel:
-            pltimelineutils._add_trace_label(fig, pdate=labeldate, label=text, y=y, hyperlink=hlink, xmode=self._xmode)
+            pltimelinehelpers._add_trace_label(fig, pdate=labeldate, label=text, y=y, hyperlink=hlink, xmode=self._xmode)
 
         # Main part, from hdate to hdate_end
         if pdates_start:
-            pltimelineutils._add_trace_part(self.figure, 
+            pltimelinehelpers._add_trace_part(self.figure, 
                         pdate_start=pdates_start['ordinal_early'], pdate_end=pdates_start['ordinal_late'], 
                         label=text, y=y, color=color, width=1, hovertext=hovertext,
                         xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
                         )
-            pltimelineutils._add_trace_marker(fig, pdate=pdates_start['ordinal_mid'], y=y, color=color,
+            pltimelinehelpers._add_trace_marker(fig, pdate=pdates_start['ordinal_mid'], y=y, color=color,
                             showlegend=showlegend, label=text, symbol=marker_symbol,
                             hovertext=hovertext, hyperlink=hlink, xmode=self._xmode)
             if pdates_end:
-                pltimelineutils._add_trace_part(self.figure, 
+                pltimelinehelpers._add_trace_part(self.figure, 
                             pdate_start=pdates_start['ordinal_late'], 
                             pdate_end=pdates_end['ordinal_early'], 
                             label=text, y=y, color=color, 
                             hovertext=hovertext, hovertext_end=hovertext_end,
                             xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
                         )
-                pltimelineutils._add_trace_part(self.figure, 
+                pltimelinehelpers._add_trace_part(self.figure, 
                             pdate_start=pdates_end['ordinal_early'], pdate_end=pdates_end['ordinal_late'], 
                                 label=text, y=y, color=color, width=1, 
                                 hovertext=hovertext, hovertext_end=hovertext_end,
@@ -320,11 +310,11 @@ class plTimeLine():
                         )
 
                 if ongoing:   # Right arrow at end of 'ongoing' period
-                    pltimelineutils._add_trace_marker(fig, pdate=pdates_end['ordinal_late'], y=y, color=color,
+                    pltimelinehelpers._add_trace_marker(fig, pdate=pdates_end['ordinal_late'], y=y, color=color,
                                 symbol='arrow-right',
                                 hovertext=hovertext, hyperlink=hlink, xmode=self._xmode)
                 else:        # Normal marker at end of period
-                    pltimelineutils._add_trace_marker(fig, pdate=pdates_end['ordinal_mid'], y=y, color=color,
+                    pltimelinehelpers._add_trace_marker(fig, pdate=pdates_end['ordinal_mid'], y=y, color=color,
                                 symbol=marker_symbol,
                                 hovertext=hovertext_end if hovertext_end else hovertext, 
                                 hyperlink=hlink, xmode=self._xmode)
@@ -334,14 +324,14 @@ class plTimeLine():
                 hovertext = f"{htext} (b. {hdtimelineutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})"
                 endpoint = pdates_start['ordinal_early'] if pdates_start else \
                             pdates_birth['ordinal_mid'] + int((pdates_death['ordinal_mid'] - pdates_birth['ordinal_mid']) / 2.0)
-                pltimelineutils._add_trace_part(self.figure, 
+                pltimelinehelpers._add_trace_part(self.figure, 
                                 pdate_start=pdates_birth['ordinal_late'], 
                                 pdate_end=endpoint, 
                                 label=text, y=y, color=color, dash='dot', hovertext=hovertext,
                                 xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
                                 )
                 if pdates_birth['ordinal_early'] < pdates_birth['ordinal_late']:
-                    pltimelineutils._add_trace_part(self.figure, 
+                    pltimelinehelpers._add_trace_part(self.figure, 
                                 pdate_start=pdates_birth['ordinal_early'], pdate_end=pdates_birth['ordinal_late'], 
                                 label=text, y=y, color=color, width=1, dash='dot', hovertext=hovertext,
                                 xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
@@ -354,20 +344,20 @@ class plTimeLine():
                 startpoint = pdates_end['ordinal_late'] if pdates_end else \
                             pdates_start['ordinal_late'] if pdates_start else \
                             pdates_birth['ordinal_mid'] + int((pdates_death['ordinal_mid'] - pdates_birth['ordinal_mid']) / 2.0)
-                pltimelineutils._add_trace_part(self.figure, 
+                pltimelinehelpers._add_trace_part(self.figure, 
                             pdate_start=startpoint, pdate_end=pdates_death['ordinal_early'], 
                             label=text, y=y, color=color, dash='dot', hovertext=hovertext,
                             xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
                             )
                 if pdates_death['ordinal_early'] < pdates_death['ordinal_late']:
-                    pltimelineutils._add_trace_part(self.figure, 
+                    pltimelinehelpers._add_trace_part(self.figure, 
                                 pdate_start=max(startpoint,pdates_death['ordinal_early']), 
                                 pdate_end=pdates_death['ordinal_late'], 
                                 label=text, y=y, color=color, width=1, dash='dot', hovertext=hovertext,
                                 xmode=self._xmode, dateformat=self._dateformat, pointinterval=self.pointinterval
                                 )
                 if alive and (pdates_death['ordinal_late'] > startpoint):   # Right arrow 
-                    pltimelineutils._add_trace_marker(fig, pdate=pdates_death['ordinal_late'], y=y, color=color,
+                    pltimelinehelpers._add_trace_marker(fig, pdate=pdates_death['ordinal_late'], y=y, color=color,
                                 symbol='arrow-right',
                                 hovertext=hovertext, xmode=self._xmode)
         return True

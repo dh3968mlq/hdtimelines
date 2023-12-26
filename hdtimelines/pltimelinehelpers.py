@@ -1,16 +1,19 @@
 """
 Utilities for figure manipulation in Plotly
 """
+import sys
 import datetime
 import plotly.graph_objects as go
 from math import ceil
 
-try:
-    import historicaldate.hdate as hdate
-    import historicaldate.hdateutils as hdateutils
-except:
-    import historicaldate.historicaldate.hdate as hdate
-    import historicaldate.historicaldate.hdateutils as hdateutils
+# -- General idea: improves chances of tests and Sphinx builds working if this is included as a submodule
+def add_submodule(path):
+    if f"./{path}" not in sys.path:
+        sys.path.insert(0,f"../{path}") # -- Needed for Sphinx builds, usually run in the docs subdirectory
+        sys.path.insert(0,f"./{path}")  # -- For normall running. Add second so it will go first in the search order
+add_submodule("historicaldate")
+
+from historicaldate import hdateutils
 
 # ------------------------------------------------------------------------------------------------    
 # -- Now for functions that create the figure

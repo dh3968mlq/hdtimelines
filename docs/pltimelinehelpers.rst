@@ -1,7 +1,7 @@
-pltimelineutils.py
-==================
+pltimelinehelpers.py
+====================
 
-.. automodule:: hdtimelines.pltimelineutils
+.. automodule:: hdtimelines.pltimelinehelpers
    :members:
 
 **Indices and tables**
