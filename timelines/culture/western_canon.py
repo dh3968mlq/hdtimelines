@@ -1,14 +1,11 @@
-
-# The path this repo (https://github.com/dh3968mlq/historicaldate) has been downloaded to
-hdroot = "/svol1/pishare/users/pi/repos/timelines/historicaldate"
 # The path the data repo (https://github.com/dh3968mlq/historicaldate-data) has been downloaded to
 dataroot = "/svol1/pishare/users/pi/repos/timelines/historicaldate-data"
 
 import sys
-sys.path.append(hdroot)
+sys.path.insert(0,'.')
+
 from hdtimelines import pltimeline
 import pandas as pd
-import datetime
 
 df_monarchs = pd.read_csv(f"{dataroot}/data/history/europe/British Monarchs.csv",
                  na_filter=False)
@@ -27,4 +24,4 @@ pltl.add_topic_from_df(df_authors, title="Authors", showbirthanddeath=True)
 pltl.add_topic_from_df(df_composers, title="Classical Composers", showbirthanddeath=True)
 pltl.show() 
 
-pltl.write_html("historicaldate/html/tl_western_canon.html")
+pltl.write_html("html/tl_western_canon.html")

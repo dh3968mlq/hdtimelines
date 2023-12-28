@@ -1,11 +1,9 @@
-
-# The path this repo (https://github.com/dh3968mlq/historicaldate) has been downloaded to
-hdroot = "/svol1/pishare/users/pi/repos/timelines/historicaldate"
 # The path the data repo (https://github.com/dh3968mlq/historicaldate-data) has been downloaded to
 dataroot = "/svol1/pishare/users/pi/repos/timelines/historicaldate-data"
 
 import sys
-sys.path.append(hdroot)
+sys.path.insert(0,'.')
+
 from hdtimelines import pltimeline
 import pandas as pd
 import datetime
@@ -51,4 +49,4 @@ pltl.add_topic_from_df(df_world, title="FIFA World Cup")
 pltl.add_topic_from_df(df_euros, title="UEFA European Championships")
 pltl.show() 
 
-pltl.write_html("historicaldate/html/english_club_football.html")
+pltl.write_html("html/english_club_football.html")

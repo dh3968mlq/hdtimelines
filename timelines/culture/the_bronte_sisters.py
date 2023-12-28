@@ -1,11 +1,10 @@
 
-# The path this repo (https://github.com/dh3968mlq/historicaldate) has been downloaded to
-hdroot = "/svol1/pishare/users/pi/repos/timelines/historicaldate"
 # The path the data repo (https://github.com/dh3968mlq/historicaldate-data) has been downloaded to
-dataroot = "/svol1/pishare/users/pi/repos/timelines/historicaldate-data"
+dataroot = "/svol1/pishare/users/pi/repos/timelines2/historicaldate-data"
 
 import sys
-sys.path.append(hdroot)
+sys.path.insert(0,".")
+
 from hdtimelines import pltimeline
 import pandas as pd
 import datetime
@@ -31,4 +30,4 @@ pltl.add_topic_from_df(df_other, title="Brontë Family")
 pltl.add_topic_from_df(df_history,title="Events in British History")
 pltl.show() 
 
-pltl.write_html("historicaldate/html/tl_brontes.html")
+pltl.write_html("html/tl_brontes.html")
