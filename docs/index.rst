@@ -1,16 +1,15 @@
 
-historicaldate documentation
-============================
-
-Table of Contents
------------------
+hdtimelines documentation
+=========================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
+   overview
    pltimeline
    pltimelinehelpers
+   pltutils
    lineorganiser
    colorgen
    hdtimeline

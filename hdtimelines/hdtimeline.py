@@ -17,7 +17,7 @@ from hdtimelines import hdtopic
 # ----------    
 class hdTimeLine():
     '''
-    Holds a timeline specification, together with line arrangement information
+    Holds a timeline specification
     
     Properties:
 

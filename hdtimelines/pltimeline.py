@@ -67,6 +67,21 @@ class plTimeLine():
         self.topics = []   # List of basic information about topics: title, min_y, max_y
 
 # -------------
+    @classmethod
+    def from_hdtimeline(cls, hdtl, *args, **kwargs):
+        '''
+        Class method: construct a plTimeLine() from an hdTimeLine()
+        
+        Usage: *pltl = pltimeline.plTimeLine.from_hdtimeline(hdtl, *args, **kwargs)*
+
+        *args, **kwargs correspond to arguments of the plTimeLine() constructor, except that *title* is not
+        allowed here, but is instead always taken from hdtl.title
+        '''
+        pltl = cls(hdtl.title, *args, **kwargs)
+        for topic in hdtl.topics:
+            pltl.add_topic(topic, marker_symbol="circle")            
+        return pltl
+# -------------
     def fit_xaxis(self, mindate=None, maxdate=None):
         """
         Fit x axis to specified dates, or to data range

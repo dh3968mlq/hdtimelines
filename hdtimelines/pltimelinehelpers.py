@@ -1,5 +1,7 @@
 """
-Utilities for figure manipulation in Plotly
+Helper utilities for use by the plTimeLine() class
+
+Not generally intended for end users
 """
 import sys
 import datetime

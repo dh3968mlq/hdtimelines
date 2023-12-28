@@ -18,7 +18,7 @@ class hdTopic():
     * title (str): title of the topic
     * events (list of dict): events in this topic. Dictionary keys are allowed column names in a .csv file as specified in the README
     * ordinals (list of dicts): dictionaries of ordinals corresponding to the dates of events in this topic
-    * event_display_lines (list of int): (possible future deprectation): lines on which to display the events
+    * event_display_lines (list of int): (possible future deprecation): lines on which to display the events
     '''
     def __init__(self, title="", events=None, id=None):
         """
