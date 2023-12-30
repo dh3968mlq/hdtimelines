@@ -4,6 +4,10 @@ A Python package for creating graphical timelines of historical data using [Plot
 
 Github: https://github.com/dh3968mlq/hdtimelines
 
+Documentation: https://hdtimelines.readthedocs.io/en/stable/
+
+PyPI: https://pypi.org/project/hdtimelines/
+
 Example outputs: https://historicaldate.com/
 
 Some starter datasets (.csv): https://github.com/dh3968mlq/historicaldate-data
