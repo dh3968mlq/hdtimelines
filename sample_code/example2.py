@@ -10,8 +10,10 @@ from hdtimelines import pltimeline, hdtimeline
 import pandas as pd
 
 hdtl = hdtimeline.hdTimeLine() 
-hdtl.add_topic_csv("British Monarchs","data/history/europe/British Monarchs.csv", dataroot=dataroot)
-hdtl.add_topic_csv("British Prime Ministers","data/history/europe/British Prime Ministers.csv", dataroot=dataroot)
+hdtl.add_topic_csv("British Monarchs",
+                   f"{dataroot}/data/history/europe/British Monarchs.csv")
+hdtl.add_topic_csv("British Prime Ministers",
+                   f"{dataroot}/data/history/europe/British Prime Ministers.csv")
 
 pltl = pltimeline.plTimeLine.from_hdtimeline(hdtl)
 pltl.show() 

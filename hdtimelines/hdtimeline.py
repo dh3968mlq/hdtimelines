@@ -66,12 +66,12 @@ class hdTimeLine():
         events = df.to_dict(orient='records')
         return self.add_topic_dict(title, events)
     # ----------
-    def add_topic_csv(self, title, filename, dataroot="./historicaldate-data/data"):
+    def add_topic_csv(self, title, filename):
         """
         Read .csv file and add topic based on its contents.
         Returns ID of added topic
         """
-        df = pd.read_csv(f"{dataroot}/{filename}", na_filter=False)
+        df = pd.read_csv(filename, na_filter=False)
         return self.add_topic_df(title, df)
     # ----------
     def add_topic_dict(self, title, events):

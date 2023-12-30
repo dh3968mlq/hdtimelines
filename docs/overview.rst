@@ -129,11 +129,9 @@ may be constructed from it.
 
     hdtl = hdtimeline.hdTimeLine() 
     hdtl.add_topic_csv("British Monarchs",
-          "data/history/europe/British Monarchs.csv", 
-          dataroot=dataroot)
+          f"{dataroot}/data/history/europe/British Monarchs.csv")
     hdtl.add_topic_csv("British Prime Ministers",
-          "data/history/europe/British Prime Ministers.csv", 
-          dataroot=dataroot)
+          f"{dataroot}/data/history/europe/British Prime Ministers.csv")
 
     pltl = pltimeline.plTimeLine.from_hdtimeline(hdtl)
     pltl.show() 
