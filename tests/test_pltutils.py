@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0,".") # For Github
+
 from hdtimelines import pltutils
 import pandas as pd
 

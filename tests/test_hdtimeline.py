@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0,".") # For Github
+
 from hdtimelines import hdtimeline
 
 def test_hdtimeline():
