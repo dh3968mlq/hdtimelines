@@ -1,5 +1,6 @@
 import sys
 sys.path.insert(0,".") # For Github
+sys.path.insert(0,"./hdtimelines") # in case this is run when a submodule
 
 from hdtimelines import pltimeline
 from historicaldate import hdateutils

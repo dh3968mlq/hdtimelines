@@ -1,11 +1,19 @@
 import sys
+import glob
 sys.path.insert(0,".") # For Github
+sys.path.insert(0,"./hdtimelines") # in case this is run when a submodule
 
 from hdtimelines import hdtimeline
 
 def test_hdtimeline():
+    # Find test data path
+    if glob.glob('./hdtimelines/test_data/'):
+        path = './hdtimelines/test_data'
+    else:
+        path = './test_data'
+
     hd = hdtimeline.hdTimeLine("Test timeline")
-    hd.add_topic_csv('Monarchs extract','./test_data/British Monarchs_extract_ok.csv')
+    hd.add_topic_csv('Monarchs extract',f'{path}/British Monarchs_extract_ok.csv')
     daterange = hd.get_date_range()
 
     assert hd.title == "Test timeline"
@@ -21,7 +29,7 @@ def test_hdtimeline():
             'url': 'https://en.wikipedia.org/wiki/William_the_Conqueror'}
     assert hd.topics[0].events[0] == dtest
 
-    hd.add_topic_csv('Playwrights extract','./test_data/Playwrights_extract_ok.csv')
+    hd.add_topic_csv('Playwrights extract',f'{path}/Playwrights_extract_ok.csv')
     hd.move_topic(id=1, indexshift=1)   # Move Monarchs down
     assert [topic.id for topic in hd.topics] == [2, 1]
 
