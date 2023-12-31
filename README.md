@@ -86,6 +86,10 @@ In brief:
 
 ## Changes
 
+### New in 0.1.0
+
+Released to PyPI and documentation on readthedocs
+
 ### New in 0.0.7
 
 Split from historicaldate package (https://github.com/dh3968mlq/historicaldate)
