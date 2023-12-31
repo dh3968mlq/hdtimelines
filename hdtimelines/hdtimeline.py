@@ -107,7 +107,11 @@ class hdTimeLine():
             return None
     # ----------
     def remove_topic(self, id=None):
-        "Remove a topic, given its id. Returns True if an item is removed, False otherwise"
+        '''
+        Remove a topic, given its id. Returns True if an item is removed, False otherwise
+        This leaves _maxid unchanged, even if the topic with this ID is removed
+        ... has the knock-on consequence that hd2 = hdTimeLine(d=hd.to_dict()) can change _maxid
+        '''
         index = self.get_topic_index(id) if id else None
 
         if index is not None:
