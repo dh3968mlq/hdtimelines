@@ -79,7 +79,7 @@ class plTimeLine():
         '''
         pltl = cls(hdtl.title, *args, **kwargs)
         for topic in hdtl.topics:
-            pltl.add_topic(topic, marker_symbol="circle")            
+            pltl.add_topic(topic)            
         return pltl
 # -------------
     def fit_xaxis(self, mindate=None, maxdate=None):
