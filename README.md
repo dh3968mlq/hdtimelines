@@ -12,7 +12,7 @@ Example outputs: https://historicaldate.com/
 
 Some starter datasets (.csv): https://github.com/dh3968mlq/historicaldate-data
 
-![Example timeline image](https://historicaldate.com/wp-content/uploads/2023/05/basic_timeline_example.png)
+![Example timeline image](https://timeflows.uk/wp-content/uploads/2024/01/basic_timeline_example.png)
 
 Uses the [historicaldate](https://historicaldate.readthedocs.io/en/stable/) package for dates:
    * Dates in input files are in a natural readable format, such as '25 Dec 1066'
