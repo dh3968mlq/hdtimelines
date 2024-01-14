@@ -145,6 +145,12 @@ class plTimeLine():
         if "rank" in dfs.columns:
             dfs = dfs[dfs["rank"] <= max_rank]
 
+        xrange_years = hdateutils.to_years(self.maxdate) - hdateutils.to_years(self.mindate)
+        if "min_xrange_years" in dfs.columns:
+            dfs = dfs[dfs["min_xrange_years"].fillna(0.0) <= xrange_years]
+        if "max_xrange_years" in dfs.columns:
+            dfs = dfs[dfs["max_xrange_years"].fillna(1.0e9) >= xrange_years]
+
         lo = lineorganiser.LineOrganiser(daysperlabelchar=2.75 * self.initial_range_years,
                                          daysminspacing=0.5 * self.initial_range_years)
 
