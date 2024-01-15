@@ -190,8 +190,10 @@ class plTimeLine():
             self.figure.update_yaxes(range=[max(self.max_y_used+0.25,6.0),-0.25], 
                                     visible=False)
         
-        self.earliest = lo.earliest if self.earliest is None else min(self.earliest, lo.earliest)
-        self.latest = lo.latest if self.latest is None else max(self.latest, lo.latest)
+        self.earliest = lo.earliest if self.earliest is None else \
+                self.earliest if lo.earliest is None else min(self.earliest, lo.earliest)
+        self.latest = lo.latest if self.latest is None else \
+                self.latest if lo.earliest is None else max(self.latest, lo.latest)
 
         return some_events_added
 # -------------
@@ -359,9 +361,14 @@ class plTimeLine():
                                 )
 
             if pdates_death and (pdates_death['ordinal_mid'] is not None):
-                hovertext = f"{htext} (b. {hdtimelineutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})" if alive \
-                            else f"{htext} (d. {hdtimelineutils.calc_yeartext(pdates_death, hover_datetype=hover_datetype)}" +\
+                if alive:
+                    hovertext = f"{htext} (b. {hdtimelineutils.calc_yeartext(pdates_birth, hover_datetype=hover_datetype)})"
+                elif pdates_birth and pdates_birth['ordinal_mid']:
+                    hovertext = f"{htext} (d. {hdtimelineutils.calc_yeartext(pdates_death, hover_datetype=hover_datetype)}" +\
                                     f" aged {hdtimelineutils.calc_agetext(pdates_birth, pdates_death)})"
+                else:
+                    hovertext = f"{htext} (d. {hdtimelineutils.calc_yeartext(pdates_death, hover_datetype=hover_datetype)}"
+                    
                 startpoint = pdates_end['ordinal_late'] if pdates_end else \
                             pdates_start['ordinal_late'] if pdates_start else \
                             pdates_birth['ordinal_mid'] + int((pdates_death['ordinal_mid'] - pdates_birth['ordinal_mid']) / 2.0)
