@@ -12,7 +12,7 @@ from math import ceil
 def add_submodule(path):
     if f"./{path}" not in sys.path:
         sys.path.insert(0,f"../../{path}") # -- Needed for Sphinx builds, usually run in the docs subdirectory
-        sys.path.insert(0,f"./{path}")  # -- For normall running. Add second so it will go first in the search order
+        sys.path.insert(0,f"./{path}")  # -- For normal running. Add second so it will go first in the search order
 add_submodule("historicaldate")
 
 from historicaldate import hdateutils
