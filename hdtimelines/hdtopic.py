@@ -63,4 +63,10 @@ class hdTopic():
         mindate = min([d["earliest"] for d in self.ordinals])
         maxdate = max([d["latest"] for d in self.ordinals])
         return mindate, maxdate
+    # ---------
+    def xrange_breakpoints(self):
+        bpoints = set()
+        for ordset in self.ordinals:
+            bpoints = bpoints | {ordset.get("min_xrange_years", None), ordset.get("max_xrange_years", None)}
+        return bpoints - {None}
 

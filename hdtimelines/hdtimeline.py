@@ -33,6 +33,7 @@ class hdTimeLine():
         self.title = title
         self._maxid = 0
         self.action_applied = None  # Used to record the last operation. Not updated by methods here, but can be used by clients
+        self.xrange_breakpoints = set()
         if d:
             self.from_dict(d)
         return
@@ -49,6 +50,7 @@ class hdTimeLine():
             topic.from_dict(dtopic)
             self.topics.append(topic)
             self._maxid = max(self._maxid, topic.id)
+        self.xrange_breakpoints = self._xrange_breakpoints()
     # ----------    
     def to_dict(self):
         """
@@ -81,6 +83,7 @@ class hdTimeLine():
         """
         self._maxid = self._maxid + 1
         self.topics.append(hdtopic.hdTopic(title, events, id=self._maxid))
+        self.xrange_breakpoints = self._xrange_breakpoints()
         return self._maxid
     # ----------
     def get_date_range(self):
@@ -116,6 +119,7 @@ class hdTimeLine():
 
         if index is not None:
             self.topics.pop(index)
+            self.xrange_breakpoints = self._xrange_breakpoints()
             return True
         else:
             return False
@@ -146,3 +150,10 @@ class hdTimeLine():
         # -- reorder the topic list
         topics_neworder = [self.topics[index] for index in index_order]
         self.topics = topics_neworder
+    # ---------
+    def _xrange_breakpoints(self):
+        bpoints = {None}
+        for topic in self.topics:
+            bpoints = bpoints | topic.xrange_breakpoints()
+        return bpoints - {None}
+

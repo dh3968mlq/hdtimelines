@@ -55,8 +55,21 @@ def calc_event_ordinals(event, dateformat=None):
         d.update(calc_date_ordinals(hd, "death", dateformat=dateformat, 
                         missingasongoing=(d.get("birth_mid", None) is not None)))
 
+    # -- Calculate earliest and lateset ordinals
     d["earliest"] = min({val for val in d.values() if type(val)==int})
     d["latest"] = max({val for val in d.values() if type(val)==int})
+
+    # -- Calculate min/max xrange years
+    if (y := event.get("min_xrange_years", None)): 
+        try:
+            d["min_xrange_years"]  = float(y)
+        except:
+            pass
+    if (y := event.get("max_xrange_years", None)): 
+        try:
+            d["max_xrange_years"]  = float(y)
+        except:
+            pass
 
     # -- Calculate the label date
     if d.get("start_mid", None) is not None:
