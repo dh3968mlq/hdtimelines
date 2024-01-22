@@ -171,7 +171,7 @@ class plTimeLine():
         some_events_added = False
         if "hdate_birth" in dfs.columns and lives_first:
             dfs["_hdplbirth"] = dfs["hdate_birth"].apply(lambda x: hdateutils.calc_mid_ordinal(x, dateformat=self._dateformat))
-            df_lives = dfs[dfs["_hdplbirth"].notna()].sort_values(["_hdplbirth"])
+            df_lives = dfs[dfs["_hdplbirth"].notna()]  # .sort_values(["_hdplbirth"])
             some_events_added = disp_set(df_lives, marker_symbol=marker_symbol) or some_events_added
             dfs = dfs[dfs["_hdplbirth"].isna()]   # -- not lives
             lo.reset_startline()
