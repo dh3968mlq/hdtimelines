@@ -95,7 +95,7 @@ class plTimeLine():
                         else self.mindate
         latest = maxord if maxord is not None \
                         else self.maxdate
-        if fitted := earliest and latest and (latest > earliest):
+        if fitted := (earliest is not None) and (latest is not None) and (latest > earliest):
             self.maxdate = latest 
             self.mindate = earliest 
             if self._xmode == "date":
