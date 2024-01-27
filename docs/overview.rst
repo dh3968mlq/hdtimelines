@@ -42,9 +42,9 @@ To create a timeline:
     from hdtimelines import pltimeline
     import pandas as pd
 
-    df1 = pd.read_csv(f"{dataroot}/data/history/europe/British Monarchs.csv",
+    df1 = pd.read_csv(f"{dataroot}/data/History/europe/British Monarchs.csv",
                     na_filter=False)
-    df2 = pd.read_csv(f"{dataroot}/data/history/europe/British Prime Ministers.csv",
+    df2 = pd.read_csv(f"{dataroot}/data/History/europe/British Prime Ministers.csv",
                     na_filter=False)
 
     pltl = pltimeline.plTimeLine()
@@ -129,9 +129,9 @@ may be constructed from it.
 
     hdtl = hdtimeline.hdTimeLine() 
     hdtl.add_topic_csv("British Monarchs",
-          f"{dataroot}/data/history/europe/British Monarchs.csv")
+          f"{dataroot}/data/History/europe/British Monarchs.csv")
     hdtl.add_topic_csv("British Prime Ministers",
-          f"{dataroot}/data/history/europe/British Prime Ministers.csv")
+          f"{dataroot}/data/History/europe/British Prime Ministers.csv")
 
     pltl = pltimeline.plTimeLine.from_hdtimeline(hdtl)
     pltl.show() 
