@@ -7,13 +7,13 @@ sys.path.insert(0,'.')
 from hdtimelines import pltimeline
 import pandas as pd
 
-df_monarchs = pd.read_csv(f"{dataroot}/data/History/europe/British Monarchs.csv",
+df_monarchs = pd.read_csv(f"{dataroot}/data/History/Europe/British Monarchs.csv",
                  na_filter=False)
-df_playwrights = pd.read_csv(f"{dataroot}/data/Culture/western_canon/Playwrights.csv",
+df_playwrights = pd.read_csv(f"{dataroot}/data/Culture/Western Canon/Playwrights.csv",
                  na_filter=False)
-df_authors = pd.read_csv(f"{dataroot}/data/Culture/western_canon/Authors.csv",
+df_authors = pd.read_csv(f"{dataroot}/data/Culture/Western Canon/Authors.csv",
                  na_filter=False)
-df_composers = pd.read_csv(f"{dataroot}/data/Culture/western_canon/Classical Composers.csv",
+df_composers = pd.read_csv(f"{dataroot}/data/Culture/Western Canon/Classical Composers.csv",
                  na_filter=False)
 
 pltl = pltimeline.plTimeLine(#mindate=datetime.date(1,1,1), maxdate=datetime.date(500,1,1),

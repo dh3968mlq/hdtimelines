@@ -8,9 +8,9 @@ sys.path.insert(0,".")
 from hdtimelines import pltimeline
 import pandas as pd
 
-df1 = pd.read_csv(f"{dataroot}/data/History/europe/British Monarchs.csv",
+df1 = pd.read_csv(f"{dataroot}/data/History/Europe/British Monarchs.csv",
                  na_filter=False)
-df2 = pd.read_csv(f"{dataroot}/data/History/europe/British Prime Ministers.csv",
+df2 = pd.read_csv(f"{dataroot}/data/History/Europe/British Prime Ministers.csv",
                  na_filter=False)
 
 pltl = pltimeline.plTimeLine()
