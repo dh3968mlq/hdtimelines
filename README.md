@@ -4,17 +4,17 @@ A Python package for creating graphical timelines of historical data using [Plot
 
 Github: https://github.com/dh3968mlq/hdtimelines
 
-Documentation: https://hdtimelines.readthedocs.io/en/stable/
+Documentation: https://hdtimelines.readthedocs.io/en/
 
 PyPI: https://pypi.org/project/hdtimelines/
 
-Example outputs: https://historicaldate.com/
+An app that uese this package: https://timeflows.uk/
 
 Some starter datasets (.csv): https://github.com/dh3968mlq/historicaldate-data
 
 ![Example timeline image](https://timeflows.uk/wp-content/uploads/2024/01/basic_timeline_example.png)
 
-Uses the [historicaldate](https://historicaldate.readthedocs.io/en/stable/) package for dates:
+Uses the [historicaldate](https://historicaldate.readthedocs.io/en/) package for dates:
    * Dates in input files are in a natural readable format, such as '25 Dec 1066'
    * Dates can be uncertain (e.g. 'circa 1028') and can be BC (e.g. '525 BC')
    * It is possible to specify start and end dates of persistent events, such as a wars or monarchs' reigns, and/or birth and death dates of persons
@@ -39,13 +39,13 @@ dataroot = "/svol1/pishare/users/pi/repos/timelines2/historicaldate-data"
 from hdtimelines import pltimeline
 import pandas as pd
 
-df1 = pd.read_csv(f"{dataroot}/data/History/Europe/British Monarchs.csv",
-                 na_filter=False)
+df1 = pd.read_csv(f"{dataroot}/data/History/Europe/English and British Monarchs.csv",
+               na_filter=False)
 df2 = pd.read_csv(f"{dataroot}/data/History/Europe/British Prime Ministers.csv",
-                 na_filter=False)
+               na_filter=False)
 
 pltl = pltimeline.plTimeLine()
-pltl.add_topic_from_df(df1, title="British Monarchs from 1066")
+pltl.add_topic_from_df(df1, title="English and British Monarchs")
 pltl.add_topic_from_df(df2, title="British Prime Ministers") 
 pltl.show() # Show in a browser, or...
 pltl.write_html("/home/pi/example_timeline.html")
@@ -67,10 +67,13 @@ Dataframes passed to *add_topic_from_df* have one row per event or life, and spe
 | color (or colour) | Colour to draw the event or life
 | url | hyperlink, active by clicking on the displayed label |
 | rank | An integer, use together with *max_rank* to control which rows are displayed
+| min_xrange_years | An integer. The event is displayed only if the displayed date range is greater than *min_xrange_years*
+| max_xrange_years | An integer. The event is displayed only if the displayed date range is less than or equal to *max_xrange_years*
+
 
 ## Date formats
 
-Date formats are described in detail at https://historicaldate.readthedocs.io/en/stable/
+Date formats are described in detail at https://historicaldate.readthedocs.io/en/
 
 In brief:
 * Two core formats are supported by default:
@@ -85,6 +88,10 @@ In brief:
 * Ongoing events and lives are supported by setting *hdate_end* or *hdate_death* to 'ongoing'. A blank value of *hdate_death* isinterprested as meaning a person is still alive.
 
 ## Changes
+
+### New in 0.1.1
+
+*max_xrange_years*, *min_xrange_years*
 
 ### New in 0.1.0
 

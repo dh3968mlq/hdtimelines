@@ -1,6 +1,6 @@
 Sphinx>=7.0.0
 sphinx_rtd_theme>=2.0.0
 readme-renderer>=40.0
-historicaldate>=0.1.0
+historicaldate>=0.1.1
 plotly>=5.18.0
 pandas>=2.0.0
