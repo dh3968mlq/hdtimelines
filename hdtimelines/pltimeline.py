@@ -147,7 +147,7 @@ class plTimeLine():
 
         xrange_years = hdateutils.to_years(self.maxdate) - hdateutils.to_years(self.mindate)
         if "min_xrange_years" in dfs.columns:
-            dfs = dfs[dfs["min_xrange_years"].replace({"":0.0}).astype(float).fillna(value=0.0) <= xrange_years]
+            dfs = dfs[dfs["min_xrange_years"].replace({"":0.0}).astype(float).fillna(value=0.0) < xrange_years]
         if "max_xrange_years" in dfs.columns:
             dfs = dfs[dfs["max_xrange_years"].replace({"":1.0e9}).astype(float).fillna(value=1.0e9) >= xrange_years]
 

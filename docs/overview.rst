@@ -3,15 +3,13 @@ Overview
 
 A Python package for creating graphical timelines of historical data using `Plotly <https://plotly.com/python/>`_
 
-Github: https://github.com/dh3968mlq/hdtimelines
-
-Example outputs: https://historicaldate.com/
+For an app using this package: https://timeflows.uk/
 
 Some starter datasets (.csv): https://github.com/dh3968mlq/historicaldate-data
 
 Example timeline image:
 
-.. image:: https://historicaldate.com/wp-content/uploads/2023/05/basic_timeline_example.png
+.. image:: https://timeflows.uk/wp-content/uploads/2024/01/basic_timeline_example.png
 
 The `historicaldate <https://historicaldate.readthedocs.io/en/stable/>`_ package is used for date parsing:
    * Dates in input files are in a natural readable format, such as '25 Dec 1066'
@@ -20,7 +18,7 @@ The `historicaldate <https://historicaldate.readthedocs.io/en/stable/>`_ package
 
 In the timeline display:
 
-.. image:: https://historicaldate.com/wp-content/uploads/timeline_explanation1.png
+.. image:: https://timeflows.uk/wp-content/uploads/2024/01/timeline_explanation3.png
 
 Simple Usage: the plTimeLine() Class
 ------------------------------------
@@ -42,13 +40,13 @@ To create a timeline:
     from hdtimelines import pltimeline
     import pandas as pd
 
-    df1 = pd.read_csv(f"{dataroot}/data/History/Europe/British Monarchs.csv",
+    df1 = pd.read_csv(f"{dataroot}/data/History/Europe/English and British Monarchs.csv",
                     na_filter=False)
     df2 = pd.read_csv(f"{dataroot}/data/History/Europe/British Prime Ministers.csv",
                     na_filter=False)
 
     pltl = pltimeline.plTimeLine()
-    pltl.add_topic_from_df(df1, title="British Monarchs from 1066")
+    pltl.add_topic_from_df(df1, title="English and British Monarchs")
     pltl.add_topic_from_df(df2, title="British Prime Ministers") 
     pltl.show() # Show in a browser, or...
     pltl.write_html("/home/pi/example_timeline.html")
@@ -87,6 +85,12 @@ All other columns are optional.
      - hyperlink, active by clicking on the displayed label
    * - rank
      - An integer, use together with *max_rank* to control which rows are displayed
+   * - | min_xrange_years
+     - | An integer. The event is displayed only if the displayed
+       | date range is greater than *min_xrange_years*
+   * - | max_xrange_years
+     - | An integer. The event is displayed only if the displayed
+       | date range is less than or equal to *max_xrange_years*
 
 Date formats
 ------------
@@ -121,23 +125,17 @@ may be constructed from it.
     # The folder that historicaldate-data has been downloaded to...
     dataroot = "/svol1/pishare/users/pi/repos/timelines2/historicaldate-data" 
 
-    import sys
-    sys.path.insert(0,".")
-
     from hdtimelines import pltimeline, hdtimeline
     import pandas as pd
 
     hdtl = hdtimeline.hdTimeLine() 
-    hdtl.add_topic_csv("British Monarchs",
-          f"{dataroot}/data/History/Europe/British Monarchs.csv")
+    hdtl.add_topic_csv("English and British Monarchs",
+          f"{dataroot}/data/History/Europe/English and British Monarchs.csv")
     hdtl.add_topic_csv("British Prime Ministers",
           f"{dataroot}/data/History/Europe/British Prime Ministers.csv")
 
     pltl = pltimeline.plTimeLine.from_hdtimeline(hdtl)
     pltl.show() 
-
-
-
 
 **Indices and tables**
 
